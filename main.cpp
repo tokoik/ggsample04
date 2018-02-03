@@ -1,157 +1,38 @@
-// ƒEƒBƒ“ƒhƒEŠÖ˜A‚Ìˆ—
-#include "Window.h"
+ï»¿//
+// ãƒ¡ã‚¤ãƒ³ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
+//
 
-// ƒVƒF[ƒ_[ŠÖ˜A‚Ìˆ—
-#include "shader.h"
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã®è¡¨ç¤ºã®æº–å‚™
+#if defined(_WIN32)
+#  include <Windows.h>
+#  include <atlstr.h>  
+#endif
 
-// ƒIƒuƒWƒFƒNƒgŠÖ˜A‚Ìˆ—
-#include "object.h"
-
-// •ÏŠ·s—ñŠÖ˜A‚Ìˆ—
-#include "matrix.h"
-
-// Catmull-Rom ƒXƒvƒ‰ƒCƒ“
-#include "spline.h"
-
-// •W€ƒ‰ƒCƒuƒ‰ƒŠ
-#include <cmath>
-
-// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌüŠúi•bj
-const double cycle(5.0);
+// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³æœ¬ä½“
+#include "GgApplication.h"
 
 //
-// ƒƒCƒ“ƒvƒƒOƒ‰ƒ€
+// ãƒ¡ã‚¤ãƒ³ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 //
-int main()
+int main() try
 {
-  // ƒEƒBƒ“ƒhƒE‚ğì¬‚·‚é
-  Window window("ggsample04");
+  // ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³æœ¬ä½“
+  GgApplication app;
 
-  // ”wŒiF‚ğw’è‚·‚é
-  glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+  // ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å®Ÿè¡Œã™ã‚‹
+  app.run();
+}
+catch (const std::runtime_error &e)
+{
+  // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹
+#if defined(_WIN32)
+  const CStringW message(e.what());
+  MessageBox(NULL, LPCWSTR(message), TEXT("ã‚²ãƒ¼ãƒ ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ç‰¹è«–"), MB_OK | MB_ICONERROR);
+#else
+  std::cerr << e.what() << "\n\n[Type enter key] ";
+  std::cin.get();
+#endif
 
-  // ƒvƒƒOƒ‰ƒ€ƒIƒuƒWƒFƒNƒg‚Ìì¬
-  const GLuint program(loadProgram("simple.vert", "pv", "simple.frag", "fc"));
-
-  // uniform •Ï”‚ÌƒCƒ“ƒfƒbƒNƒX‚ÌŒŸõiŒ©‚Â‚©‚ç‚È‚¯‚ê‚Î -1j
-  const GLint mcLoc(glGetUniformLocation(program, "mc"));
-
-  // ƒrƒ…[•ÏŠ·s—ñ‚ğ mv ‚É‹‚ß‚é
-  GLfloat mv[16];
-  lookat(mv, 3.0f, 4.0f, 5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-
-  // ’¸“_‘®«
-  static const GLfloat position[][3] =
-  {
-    { -0.9f, -0.9f, -0.9f },  // (0)
-    {  0.9f, -0.9f, -0.9f },  // (1)
-    {  0.9f, -0.9f,  0.9f },  // (2)
-    { -0.9f, -0.9f,  0.9f },  // (3)
-    { -0.9f,  0.9f, -0.9f },  // (4)
-    {  0.9f,  0.9f, -0.9f },  // (5)
-    {  0.9f,  0.9f,  0.9f },  // (6)
-    { -0.9f,  0.9f,  0.9f },  // (7)
-  };
-  static const int vertices(sizeof position / sizeof position[0]);
-
-  // ’¸“_ƒCƒ“ƒfƒbƒNƒX
-  static const GLuint index[] =
-  {
-    0, 1,
-    1, 2,
-    2, 3,
-    3, 0,
-    0, 4,
-    1, 5,
-    2, 6,
-    3, 7,
-    4, 5,
-    5, 6,
-    6, 7,
-    7, 4,
-  };
-  static const GLuint lines(sizeof index / sizeof index[0]);
-
-  // ’¸“_”z—ñƒIƒuƒWƒFƒNƒg‚Ìì¬
-  const GLuint vao(createObject(vertices, position, lines, index));
-
-  // •½sˆÚ“®‚ÌŒo˜H
-  static const float route[][3] =
-  {
-    { -2.0f, -1.0f, -3.0f },
-    {  0.0f, -2.0f, -2.0f },
-    { -1.0f, -1.0f, -1.0f },
-    { -0.5f, -0.5f, -0.5f },
-    {  0.0f,  0.0f,  0.0f },
-  };
-
-  // ’Ê‰ßŠÔ (~ cycle)
-  static const float transit[] =
-  {
-    0.0f,
-    0.3f,
-    0.5f,
-    0.7f,
-    1.0f,
-  };
-
-  // ’Ê‰ß’n“_‚Ì”
-  static const int points(sizeof transit / sizeof transit[0]);
-
-  // Œo‰ßŠÔ‚ÌƒŠƒZƒbƒg
-  glfwSetTime(0.0);
-
-  // ƒEƒBƒ“ƒhƒE‚ªŠJ‚¢‚Ä‚¢‚éŠÔŒJ‚è•Ô‚·
-  while (window.shouldClose() == GL_FALSE)
-  {
-    // ƒEƒBƒ“ƒhƒE‚ğÁ‹‚·‚é
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // ƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚Ìg—pŠJn
-    glUseProgram(program);
-
-    // ‚ÌŒv‘ª
-    const float t(static_cast<float>(fmod(glfwGetTime(), cycle) / cycle));
-
-    //  t ‚É‚à‚Æ‚Ã‚­‰ñ“]ƒAƒjƒ[ƒVƒ‡ƒ“
-    GLfloat mr[16];                   // ‰ñ“]‚Ì•ÏŠ·s—ñ
-    // yh‘èz‚±‚±‚ğ‰ğ“š‚µ‚Ä‚­‚¾‚³‚¢i‰º‚Ì loadIdentity() ‚ğ’u‚«Š·‚¦‚Ä‚­‚¾‚³‚¢j
-    loadIdentity(mr);
-
-    //  t ‚É‚à‚Æ‚Ã‚­•½sˆÚ“®ƒAƒjƒ[ƒVƒ‡ƒ“
-    float location[3];                // Œ»İˆÊ’u
-    spline(location, route, transit, points, t);
-    GLfloat mt[16];                   // •½sˆÚ“®‚Ì•ÏŠ·s—ñ
-    translate(mt, location[0], location[1], location[2]);
-
-    // ƒ‚ƒfƒ‹•ÏŠ·s—ñ‚ğ mm ‚É‹‚ßC
-    // ‚»‚ê‚Æƒrƒ…[•ÏŠ·s—ñ mv ‚ÌÏ‚ğƒ‚ƒfƒ‹ƒrƒ…[•ÏŠ·s—ñ mw ‚É‹‚ß‚é
-    GLfloat mm[16], mw[16];
-    multiply(mm, mt, mr);             // ƒ‚ƒfƒ‹•ÏŠ· mm © ˆÚ“® mt ~ ‰ñ“] mr
-    multiply(mw, mv, mm);             // ƒ‚ƒfƒ‹ƒrƒ…[•ÏŠ· mw © ƒrƒ…[•ÏŠ· mv ~ ƒ‚ƒfƒ‹•ÏŠ· mm
-
-    // “§‹“Š‰e•ÏŠ·s—ñ‚ğ mp ‚É‹‚ßC
-    // ‚»‚ê‚Æƒ‚ƒfƒ‹ƒrƒ…[•ÏŠ·s—ñ mw ‚ÌÏ‚ğƒNƒŠƒbƒsƒ“ƒOÀ•WŒn‚Ö‚Ì•ÏŠ·s—ñ mc ‚É‹‚ß‚é
-    GLfloat mp[16], mc[16];
-    perspective(mp, 0.5f, window.getAspect(), 1.0f, 15.0f);
-    multiply(mc, mp, mw);             // ƒNƒŠƒbƒsƒ“ƒOÀ•WŒn‚Ö‚Ì•ÏŠ·s—ñ mc © “Š‰e•ÏŠ· mp ~ ƒ‚ƒfƒ‹ƒrƒ…[•ÏŠ· mw
-
-    // uniform •Ï” mc ‚É•ÏŠ·s—ñ mc ‚ğİ’è‚·‚é
-    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, mc);
-
-    // •`‰æ‚Ég‚¤’¸“_”z—ñƒIƒuƒWƒFƒNƒg‚Ìw’è
-    glBindVertexArray(vao);
-
-    // }Œ`‚Ì•`‰æ
-    glDrawElements(GL_LINES, lines, GL_UNSIGNED_INT, 0);
-
-    // ’¸“_”z—ñƒIƒuƒWƒFƒNƒg‚Ìw’è‰ğœ
-    glBindVertexArray(0);
-
-    // ƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚Ìg—pI—¹
-    glUseProgram(0);
-
-    // ƒJƒ‰[ƒoƒbƒtƒ@‚ğ“ü‚ê‘Ö‚¦‚ÄƒCƒxƒ“ƒg‚ğæ‚èo‚·
-    window.swapBuffers();
-  }
+  // ãƒ–ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã™ã‚‹
+  return EXIT_FAILURE;
 }

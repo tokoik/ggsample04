@@ -1,28 +1,31 @@
-#include <cmath>
+ï»¿#include <cmath>
 #include "spline.h"
 
 //
 // Catmull-Rom Spline
 //
-//   x0, x1, x2, x3: §Œä“_
-//   t: ƒpƒ‰ƒ[ƒ^
-//   –ß‚è’l: •âŠÔ’l
+//   x0, x1, x2, x3: åˆ¶å¾¡ç‚¹
+//   t: ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
+//   æˆ»ã‚Šå€¤: è£œé–“å€¤
 //
 static float catmull_rom(float x0, float x1, float x2, float x3, float t)
 {
-  float v1 = (x2 - x0) * 0.5f, v2 = (x3 - x1) * 0.5f;
+  const float m0((x2 - x0) * 0.5f);
+  const float m1((x3 - x1) * 0.5f);
 
-  return (((2.0f * x1 - 2.0f * x2 + v1 + v2) * t
-    - 3.0f * x1 + 3.0f * x2 - 2.0f * v1 - v2) * t
-    + v1) * t + x1;
+  const float d(x1 - x2);
+  const float a(2.0f * d + m0 + m1);
+  const float b(-3.0f * d - 2.0f * m0 - m1);
+
+  return ((a * t + b) * t + m0) * t + x1;
 }
 
 //
-// Catmull-Rom Spline ‚É‚æ‚é“_—ñ‚Ì•âŠÔ
+// Catmull-Rom Spline ã«ã‚ˆã‚‹ç‚¹åˆ—ã®è£œé–“
 //
-//   p: •âŠÔ’l
-//   p0, p1, p2, p3: §Œä“_
-//   t: ƒpƒ‰ƒ[ƒ^
+//   p: è£œé–“å€¤
+//   p0, p1, p2, p3: åˆ¶å¾¡ç‚¹
+//   t: ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 //
 static void interpolate(float *p, const float *p0, const float *p1, const float *p2, const float *p3, float t)
 {
@@ -32,12 +35,12 @@ static void interpolate(float *p, const float *p0, const float *p1, const float 
 }
 
 //
-// ”CˆÓ‚Ì”‚Ì“_—ñ‚Ì Catmull-Rom Spline ‚É‚æ‚é•âŠÔ
+// ä»»æ„ã®æ•°ã®ç‚¹åˆ—ã® Catmull-Rom Spline ã«ã‚ˆã‚‹è£œé–“
 //
-//   p: •âŠÔ‚·‚é“_—ñ‚ÌÀ•W’l
-//   t: •âŠÔ‚·‚é“_—ñ‚Ìƒ^ƒCƒ€ƒ‰ƒCƒ“i’l‚Í¸‡‚ÉŠi”[‚³‚ê‚Ä‚¢‚éj
-//   n: “_‚Ì”
-//   u: •âŠÔ’l‚ğ“¾‚éƒpƒ‰ƒ[ƒ^ (t[0]…u…t[n - 1]j
+//   p: è£œé–“ã™ã‚‹ç‚¹åˆ—ã®åº§æ¨™å€¤
+//   t: è£œé–“ã™ã‚‹ç‚¹åˆ—ã®ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ï¼ˆå€¤ã¯æ˜‡é †ã«æ ¼ç´ã•ã‚Œã¦ã„ã‚‹ï¼‰
+//   n: ç‚¹ã®æ•°
+//   u: è£œé–“å€¤ã‚’å¾—ã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ (t[0]â‰¦uâ‰¦t[n - 1]ï¼‰
 //
 void spline(float *q, const float (*p)[3], const float *t, int n, float u)
 {
@@ -53,7 +56,7 @@ void spline(float *q, const float (*p)[3], const float *t, int n, float u)
   {
     int i = 0, j = n;
 
-    // u ‚ğŠÜ‚Ş t ‚Ì‹æŠÔ [t[i], t[i+1]) ‚ğ“ñ•ª–@‚Å‹‚ß‚é
+    // u ã‚’å«ã‚€ t ã®åŒºé–“ [t[i], t[i+1]) ã‚’äºŒåˆ†æ³•ã§æ±‚ã‚ã‚‹
     while (i < j)
     {
       int k = (i + j) / 2;
@@ -73,7 +76,7 @@ void spline(float *q, const float (*p)[3], const float *t, int n, float u)
       int i2 = i1 + 1;
       if (i2 > n) i2 = n;
 
-      // ƒ^ƒCƒ€ƒ‰ƒCƒ“‚ğüŒ`iÜ‚êüj•âŠÔ‚·‚éê‡
+      // ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ã‚’ç·šå½¢ï¼ˆæŠ˜ã‚Œç·šï¼‰è£œé–“ã™ã‚‹å ´åˆ
       interpolate(q, p[i0], p[i], p[i1], p[i2], (u - t[i]) / (t[i1] - t[i]));
     }
     else {

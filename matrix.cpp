@@ -1,4 +1,4 @@
-#include <cmath>
+ï»¿#include <cmath>
 
 #include "gg.h"
 using namespace gg;
@@ -6,9 +6,9 @@ using namespace gg;
 #include "matrix.h"
 
 //
-// ’PˆÊs—ñ‚ğİ’è‚·‚é
+// å˜ä½è¡Œåˆ—ã‚’è¨­å®šã™ã‚‹
 //
-//   m: ’PˆÊs—ñ‚ğİ’è‚·‚é”z—ñ•Ï”
+//   m: å˜ä½è¡Œåˆ—ã‚’è¨­å®šã™ã‚‹é…åˆ—å¤‰æ•°
 //
 void loadIdentity(GLfloat *m)
 {
@@ -19,12 +19,12 @@ void loadIdentity(GLfloat *m)
 }
 
 //
-// ’¼Œğ“Š‰e•ÏŠ·s—ñ‚ğ‹‚ß‚é
+// ç›´äº¤æŠ•å½±å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   m: ’¼Œğ“Š‰e•ÏŠ·s—ñ‚ğŠi”[‚·‚é”z—ñ
-//   left, right: ƒrƒ…[ƒ{ƒŠƒ…[ƒ€‚Ì¶‰E’[
-//   bottom, top: ƒrƒ…[ƒ{ƒŠƒ…[ƒ€‚Ìã‰º’[
-//   zNear, zFar: ‘O•û–Ê‚¨‚æ‚ÑŒã•û–Ê‚Ü‚Å‚Ì‹——£
+//   m: ç›´äº¤æŠ•å½±å¤‰æ›è¡Œåˆ—ã‚’æ ¼ç´ã™ã‚‹é…åˆ—
+//   left, right: ãƒ“ãƒ¥ãƒ¼ãƒœãƒªãƒ¥ãƒ¼ãƒ ã®å·¦å³ç«¯
+//   bottom, top: ãƒ“ãƒ¥ãƒ¼ãƒœãƒªãƒ¥ãƒ¼ãƒ ã®ä¸Šä¸‹ç«¯
+//   zNear, zFar: å‰æ–¹é¢ãŠã‚ˆã³å¾Œæ–¹é¢ã¾ã§ã®è·é›¢
 //
 void ortho(GLfloat *m, float left, float right, float bottom, float top, float zNear, float zFar)
 {
@@ -39,12 +39,12 @@ void ortho(GLfloat *m, float left, float right, float bottom, float top, float z
 }
 
 //
-// “§‹“Š‰e•ÏŠ·s—ñ‚ğ‹‚ß‚é
+// é€è¦–æŠ•å½±å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   m: “§‹“Š‰e•ÏŠ·s—ñ‚ğŠi”[‚·‚é”z—ñ
-//   left, right: ‘O•û–Ê‚Ì¶‰E’[
-//   bottom, top: ‘O•û–Ê‚Ìã‰º’[
-//   zNear, zFar: ‘O•û–Ê‚¨‚æ‚ÑŒã•û–Ê‚Ü‚Å‚Ì‹——£
+//   m: é€è¦–æŠ•å½±å¤‰æ›è¡Œåˆ—ã‚’æ ¼ç´ã™ã‚‹é…åˆ—
+//   left, right: å‰æ–¹é¢ã®å·¦å³ç«¯
+//   bottom, top: å‰æ–¹é¢ã®ä¸Šä¸‹ç«¯
+//   zNear, zFar: å‰æ–¹é¢ãŠã‚ˆã³å¾Œæ–¹é¢ã¾ã§ã®è·é›¢
 //
 void frustum(GLfloat *m, float left, float right, float bottom, float top, float zNear, float zFar)
 {
@@ -59,12 +59,12 @@ void frustum(GLfloat *m, float left, float right, float bottom, float top, float
 }
 
 //
-// ‰æŠp‚ğw’è‚µ‚Ä“§‹“Š‰e•ÏŠ·s—ñ‚ğ‹‚ß‚é
+// ç”»è§’ã‚’æŒ‡å®šã—ã¦é€è¦–æŠ•å½±å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   m: “§‹“Š‰e•ÏŠ·s—ñ‚ğŠi”[‚·‚é”z—ñ
-//   fovy: ‰æŠpiƒ‰ƒWƒAƒ“j
-//   aspect: ƒEƒBƒ“ƒhƒE‚Ìc‰¡”ä
-//   zNear, zFar: ‘O•û–Ê‚¨‚æ‚ÑŒã•û–Ê‚Ü‚Å‚Ì‹——£
+//   m: é€è¦–æŠ•å½±å¤‰æ›è¡Œåˆ—ã‚’æ ¼ç´ã™ã‚‹é…åˆ—
+//   fovy: ç”»è§’ï¼ˆãƒ©ã‚¸ã‚¢ãƒ³ï¼‰
+//   aspect: ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç¸¦æ¨ªæ¯”
+//   zNear, zFar: å‰æ–¹é¢ãŠã‚ˆã³å¾Œæ–¹é¢ã¾ã§ã®è·é›¢
 //
 void perspective(GLfloat *m, float fovy, float aspect, float zNear, float zFar)
 {
@@ -77,18 +77,18 @@ void perspective(GLfloat *m, float fovy, float aspect, float zNear, float zFar)
 }
 
 //
-// ƒrƒ…[•ÏŠ·s—ñ‚ğ‹‚ß‚é
+// ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   m: ƒrƒ…[•ÏŠ·s—ñ‚ğŠi”[‚·‚é”z—ñ
-//   ex, ey, ez: ‹“_‚ÌˆÊ’u
-//   tx, ty, tz: –Ú•W“_‚ÌˆÊ’u
-//   ux, uy, uz: ã•ûŒü‚ÌƒxƒNƒgƒ‹
+//   m: ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—ã‚’æ ¼ç´ã™ã‚‹é…åˆ—
+//   ex, ey, ez: è¦–ç‚¹ã®ä½ç½®
+//   tx, ty, tz: ç›®æ¨™ç‚¹ã®ä½ç½®
+//   ux, uy, uz: ä¸Šæ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«
 //
 void lookat(GLfloat *m, float ex, float ey, float ez, float tx, float ty, float tz, float ux, float uy, float uz)
 {
   float l;
   
-  // z ² = e - t
+  // z è»¸ = e - t
   tx = ex - tx;
   ty = ey - ty;
   tz = ez - tz;
@@ -97,7 +97,7 @@ void lookat(GLfloat *m, float ex, float ey, float ez, float tx, float ty, float 
   m[ 6] = ty / l;
   m[10] = tz / l;
   
-  // x ² = u x z ²
+  // x è»¸ = u x z è»¸
   tx = uy * m[10] - uz * m[ 6];
   ty = uz * m[ 2] - ux * m[10];
   tz = ux * m[ 6] - uy * m[ 2];
@@ -106,26 +106,26 @@ void lookat(GLfloat *m, float ex, float ey, float ez, float tx, float ty, float 
   m[ 4] = ty / l;
   m[ 8] = tz / l;
   
-  // y ² = z ² x x ²
+  // y è»¸ = z è»¸ x x è»¸
   m[ 1] = m[ 6] * m[ 8] - m[10] * m[ 4];
   m[ 5] = m[10] * m[ 0] - m[ 2] * m[ 8];
   m[ 9] = m[ 2] * m[ 4] - m[ 6] * m[ 0];
   
-  // •½sˆÚ“®
+  // å¹³è¡Œç§»å‹•
   m[12] = -(ex * m[ 0] + ey * m[ 4] + ez * m[ 8]);
   m[13] = -(ex * m[ 1] + ey * m[ 5] + ez * m[ 9]);
   m[14] = -(ex * m[ 2] + ey * m[ 6] + ez * m[10]);
   
-  // c‚è
+  // æ®‹ã‚Š
   m[ 3] = m[ 7] = m[11] = 0.0f;
   m[15] = 1.0f;
 }
 
 //
-// •½sˆÚ“®•ÏŠ·s—ñ‚ğ‹‚ß‚é
+// å¹³è¡Œç§»å‹•å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   m: •½sˆÚ“®•ÏŠ·s—ñ‚ğŠi”[‚·‚é”z—ñ
-//   x, y, z: •½sˆÚ“®—Ê
+//   m: å¹³è¡Œç§»å‹•å¤‰æ›è¡Œåˆ—ã‚’æ ¼ç´ã™ã‚‹é…åˆ—
+//   x, y, z: å¹³è¡Œç§»å‹•é‡
 //
 void translate(GLfloat *m, float x, float y, float z)
 {
@@ -139,10 +139,10 @@ void translate(GLfloat *m, float x, float y, float z)
 }
 
 //
-// Šg‘åk¬•ÏŠ·s—ñ‚ğ‹‚ß‚é
+// æ‹¡å¤§ç¸®å°å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   m: •½sˆÚ“®•ÏŠ·s—ñ‚ğŠi”[‚·‚é”z—ñ
-//   x, y, z: Šg‘åk¬—¦
+//   m: å¹³è¡Œç§»å‹•å¤‰æ›è¡Œåˆ—ã‚’æ ¼ç´ã™ã‚‹é…åˆ—
+//   x, y, z: æ‹¡å¤§ç¸®å°ç‡
 //
 void scale(GLfloat *m, float x, float y, float z)
 {
@@ -156,11 +156,11 @@ void scale(GLfloat *m, float x, float y, float z)
 }
 
 //
-// ”CˆÓ²ü‚è‚Ì‰ñ“]•ÏŠ·s—ñ‚ğ‹‚ß‚é
+// ä»»æ„è»¸å‘¨ã‚Šã®å›è»¢å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   r: ‰ñ“]•ÏŠ·s—ñ‚ğŠi”[‚·‚é”z—ñ
-//   x, y, z: ’†S²
-//   a: ‰ñ“]Špiƒ‰ƒWƒAƒ“j
+//   r: å›è»¢å¤‰æ›è¡Œåˆ—ã‚’æ ¼ç´ã™ã‚‹é…åˆ—
+//   x, y, z: ä¸­å¿ƒè»¸
+//   a: å›è»¢è§’ï¼ˆãƒ©ã‚¸ã‚¢ãƒ³ï¼‰
 //
 void rotate(GLfloat *r, float x, float y, float z, float a)
 {
@@ -195,10 +195,10 @@ void rotate(GLfloat *r, float x, float y, float z, float a)
 }
 
 //
-// –@ü•ÏŠ·s—ñ‚ğ‹‚ß‚é
+// æ³•ç·šå¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   g: –@üƒxƒNƒgƒ‹‚Ì•ÏŠ·s—ñ‚ğŠi”[‚·‚é”z—ñ
-//   m: Œ³‚Ì•ÏŠ·s—ñ
+//   g: æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã®å¤‰æ›è¡Œåˆ—ã‚’æ ¼ç´ã™ã‚‹é…åˆ—
+//   m: å…ƒã®å¤‰æ›è¡Œåˆ—
 //
 void normal(GLfloat *g, const GLfloat *m)
 {
@@ -215,18 +215,18 @@ void normal(GLfloat *g, const GLfloat *m)
 }
 
 //
-// ‹ts—ñ‚ğ‹‚ß‚é
+// é€†è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 //
-//   m1: Œ³‚Ì•ÏŠ·s—ñ
-//   m2: m1 ‚Ì‹ts—ñ
-//   ‹ts—ñ‚ª‹‚ß‚ç‚ê‚È‚¯‚ê‚Î–ß‚è’l‚Í false
+//   m1: å…ƒã®å¤‰æ›è¡Œåˆ—
+//   m2: m1 ã®é€†è¡Œåˆ—
+//   é€†è¡Œåˆ—ãŒæ±‚ã‚ã‚‰ã‚Œãªã‘ã‚Œã°æˆ»ã‚Šå€¤ã¯ false
 //
 bool inverse(GLfloat *m2, const GLfloat *m1)
 {
   int i, j, k;
   GLfloat lu[20], *plu[4], det;
   
-  // j s‚Ì—v‘f‚Ì’l‚Ìâ‘Î’l‚ÌÅ‘å’l‚ğ plu[j][4] ‚É‹‚ß‚é
+  // j è¡Œã®è¦ç´ ã®å€¤ã®çµ¶å¯¾å€¤ã®æœ€å¤§å€¤ã‚’ plu[j][4] ã«æ±‚ã‚ã‚‹
   for (j = 0; j < 4; ++j)
   {
     GLfloat max = fabs(*(plu[j] = lu + 5 * j) = *(m1++));
@@ -242,7 +242,7 @@ bool inverse(GLfloat *m2, const GLfloat *m1)
   
   det = 1.0f;
   
-  // ƒsƒ{ƒbƒg‚ğl—¶‚µ‚½ LU •ª‰ğ
+  // ãƒ”ãƒœãƒƒãƒˆã‚’è€ƒæ…®ã—ãŸ LU åˆ†è§£
   for (j = 0; j < 4; ++j)
   {
     GLfloat max = fabs(plu[j][j] * plu[j][4]);
@@ -279,13 +279,13 @@ bool inverse(GLfloat *m2, const GLfloat *m1)
     }
   }
   
-  // ‹ts—ñ‚ğ‹‚ß‚é
+  // é€†è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
   for (k = 0; k < 4; ++k)
   {
-    // m2 ‚É’PˆÊs—ñ‚ğİ’è‚·‚é
+    // m2 ã«å˜ä½è¡Œåˆ—ã‚’è¨­å®šã™ã‚‹
     for (i = 0; i < 4; ++i) m2[i * 4 + k] = (plu[i] == lu + k * 5) ? 1.0f : 0.0f;
 
-    // lu ‚©‚ç‹ts—ñ‚ğ‹‚ß‚é
+    // lu ã‹ã‚‰é€†è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
     for (i = 0; i < 4; ++i)
     {
       for (j = i; ++j < 4;) m2[j * 4 + k] -= m2[i * 4 + k] * plu[j][i];
@@ -301,9 +301,9 @@ bool inverse(GLfloat *m2, const GLfloat *m1)
 }
 
 //
-// 4 s 4 —ñ‚Ìs—ñ‚ÌÏ‚ğ‹‚ß‚é
+// 4 è¡Œ 4 åˆ—ã®è¡Œåˆ—ã®ç©ã‚’æ±‚ã‚ã‚‹
 //
-//   m © m1 ~ m2
+//   m â† m1 Ã— m2
 //
 void multiply(GLfloat *m, const GLfloat *m1, const GLfloat *m2)
 {
@@ -311,19 +311,19 @@ void multiply(GLfloat *m, const GLfloat *m1, const GLfloat *m2)
   {
     int j = i & 3, k = i & ~3;
     
-    // ”z—ñ•Ï”‚És—ñ‚ª“]’u‚³‚ê‚½ó‘Ô‚ÅŠi”[‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ğl—¶‚µ‚Ä‚¢‚é
+    // é…åˆ—å¤‰æ•°ã«è¡Œåˆ—ãŒè»¢ç½®ã•ã‚ŒãŸçŠ¶æ…‹ã§æ ¼ç´ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã‚’è€ƒæ…®ã—ã¦ã„ã‚‹
     m[i] = m1[0 + j] * m2[k + 0] + m1[4 + j] * m2[k + 1] + m1[8 + j] * m2[k + 2] + m1[12 + j] * m2[k + 3];
   }
 }
 
 //
-// ƒxƒNƒgƒ‹‚És—ñ‚ğ‚©‚¯‚é
+// ãƒ™ã‚¯ãƒˆãƒ«ã«è¡Œåˆ—ã‚’ã‹ã‘ã‚‹
 //
-//   v2 © m * v1
+//   v2 â† m * v1
 //
 void transform(GLfloat *v2, const GLfloat *m, const GLfloat *v1)
 {
-  // ”z—ñ•Ï”‚És—ñ‚ª“]’u‚³‚ê‚½ó‘Ô‚ÅŠi”[‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ğl—¶‚µ‚Ä‚¢‚é
+  // é…åˆ—å¤‰æ•°ã«è¡Œåˆ—ãŒè»¢ç½®ã•ã‚ŒãŸçŠ¶æ…‹ã§æ ¼ç´ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã‚’è€ƒæ…®ã—ã¦ã„ã‚‹
   v2[0] = m[ 0] * v1[0] + m[ 4] * v1[1] + m[ 8] * v1[2] + m[12] * v1[3];
   v2[1] = m[ 1] * v1[0] + m[ 5] * v1[1] + m[ 9] * v1[2] + m[13] * v1[3];
   v2[2] = m[ 2] * v1[0] + m[ 6] * v1[1] + m[10] * v1[2] + m[14] * v1[3];
@@ -331,9 +331,9 @@ void transform(GLfloat *v2, const GLfloat *m, const GLfloat *v1)
 }
 
 //
-// ƒxƒNƒgƒ‹ v1 ‚ğ³‹K‰»‚µ‚½‚à‚Ì‚ğ‹‚ß‚é
+// ãƒ™ã‚¯ãƒˆãƒ« v1 ã‚’æ­£è¦åŒ–ã—ãŸã‚‚ã®ã‚’æ±‚ã‚ã‚‹
 //
-//   v2 © v1 ‚ğ³‹K‰»
+//   v2 â† v1 ã‚’æ­£è¦åŒ–
 //
 void normalize(GLfloat *v2, const GLfloat *v1)
 {
