@@ -1,5 +1,7 @@
-﻿// ウィンドウ関連の処理
-#include "Window.h"
+﻿//
+// ゲームグラフィックス特論宿題アプリケーション
+//
+#include "GgApp.h"
 
 // シェーダー関連の処理
 #include "shader.h"
@@ -17,31 +19,31 @@
 #include <cmath>
 
 // アニメーションの周期（秒）
-const double cycle(5.0);
+constexpr auto cycle{ 5.0 };
 
 //
-// アプリケーションの実行
+// アプリケーション本体
 //
-void app()
+int GgApp::main(int argc, const char* const* argv)
 {
   // ウィンドウを作成する
-  Window window("ggsample04");
+  Window window{ "ggsample04" };
 
   // 背景色を指定する
   glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
   // プログラムオブジェクトの作成
-  const GLuint program(loadProgram("ggsample04.vert", "pv", "ggsample04.frag", "fc"));
+  const auto program{ loadProgram("ggsample04.vert", "pv", "ggsample04.frag", "fc") };
 
   // uniform 変数のインデックスの検索（見つからなければ -1）
-  const GLint mcLoc(glGetUniformLocation(program, "mc"));
+  const auto mcLoc{ glGetUniformLocation(program, "mc") };
 
   // ビュー変換行列を mv に求める
   GLfloat mv[16];
   lookat(mv, 3.0f, 4.0f, 5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
   // 頂点属性
-  static const GLfloat position[][3] =
+  static const GLfloat position[][3]
   {
     { -0.9f, -0.9f, -0.9f },  // (0)
     {  0.9f, -0.9f, -0.9f },  // (1)
@@ -52,10 +54,12 @@ void app()
     {  0.9f,  0.9f,  0.9f },  // (6)
     { -0.9f,  0.9f,  0.9f },  // (7)
   };
-  static const int vertices(sizeof position / sizeof position[0]);
+
+  // 頂点数
+  constexpr auto vertices{ static_cast<GLuint>(std::size(position)) };
 
   // 頂点インデックス
-  static const GLuint index[] =
+  static const GLuint index[]
   {
     0, 1,
     1, 2,
@@ -70,13 +74,15 @@ void app()
     6, 7,
     7, 4,
   };
-  static const GLuint lines(sizeof index / sizeof index[0]);
+
+  // 稜線数
+  constexpr auto lines{ static_cast<GLuint>(std::size(index)) };
 
   // 頂点配列オブジェクトの作成
-  const GLuint vao(createObject(vertices, position, lines, index));
+  const auto vao{ createObject(vertices, position, lines, index) };
 
   // 平行移動の経路
-  static const float route[][3] =
+  static const float route[][3]
   {
     { -2.0f, -1.0f, -3.0f },
     {  0.0f, -2.0f, -2.0f },
@@ -86,7 +92,7 @@ void app()
   };
 
   // 通過時間 (× cycle)
-  static const float transit[] =
+  static const float transit[]
   {
     0.0f,
     0.3f,
@@ -96,7 +102,7 @@ void app()
   };
 
   // 通過地点の数
-  static const int points(sizeof transit / sizeof transit[0]);
+  static const auto points{ static_cast<int>(std::size(transit)) };
 
   // 経過時間のリセット
   glfwSetTime(0.0);
@@ -111,7 +117,7 @@ void app()
     glUseProgram(program);
 
     // 時刻の計測
-    const float t(static_cast<float>(fmod(glfwGetTime(), cycle) / cycle));
+    const auto t{ static_cast<float>(fmod(glfwGetTime(), cycle) / cycle) };
 
     // 時刻 t にもとづく回転アニメーション
     GLfloat mr[16];                   // 回転の変換行列
@@ -154,4 +160,6 @@ void app()
     // カラーバッファを入れ替えてイベントを取り出す
     window.swapBuffers();
   }
+
+  return 0;
 }

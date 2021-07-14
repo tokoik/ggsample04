@@ -10,7 +10,7 @@ using namespace gg;
 //
 //   m: 単位行列を設定する配列変数
 //
-void loadIdentity(GLfloat *m)
+void loadIdentity(GLfloat* m)
 {
   m[ 0] = m[ 5] = m[10] = m[15] = 1.0f;
   m[ 1] = m[ 2] = m[ 3] = m[ 4] =
@@ -26,7 +26,7 @@ void loadIdentity(GLfloat *m)
 //   bottom, top: ビューボリュームの上下端
 //   zNear, zFar: 前方面および後方面までの距離
 //
-void ortho(GLfloat *m, float left, float right, float bottom, float top, float zNear, float zFar)
+void ortho(GLfloat* m, float left, float right, float bottom, float top, float zNear, float zFar)
 {
   m[ 0] =  2.0f / (right - left);
   m[ 5] =  2.0f / (top - bottom);
@@ -46,7 +46,7 @@ void ortho(GLfloat *m, float left, float right, float bottom, float top, float z
 //   bottom, top: 前方面の上下端
 //   zNear, zFar: 前方面および後方面までの距離
 //
-void frustum(GLfloat *m, float left, float right, float bottom, float top, float zNear, float zFar)
+void frustum(GLfloat* m, float left, float right, float bottom, float top, float zNear, float zFar)
 {
   m[ 0] =  2.0f * zNear / (right - left);
   m[ 5] =  2.0f * zNear / (top - bottom);
@@ -66,7 +66,7 @@ void frustum(GLfloat *m, float left, float right, float bottom, float top, float
 //   aspect: ウィンドウの縦横比
 //   zNear, zFar: 前方面および後方面までの距離
 //
-void perspective(GLfloat *m, float fovy, float aspect, float zNear, float zFar)
+void perspective(GLfloat* m, float fovy, float aspect, float zNear, float zFar)
 {
   m[ 5] = 1.0f / tan(fovy * 0.5f);
   m[ 0] = m[ 5] / aspect;
@@ -84,7 +84,7 @@ void perspective(GLfloat *m, float fovy, float aspect, float zNear, float zFar)
 //   tx, ty, tz: 目標点の位置
 //   ux, uy, uz: 上方向のベクトル
 //
-void lookat(GLfloat *m, float ex, float ey, float ez, float tx, float ty, float tz, float ux, float uy, float uz)
+void lookat(GLfloat* m, float ex, float ey, float ez, float tx, float ty, float tz, float ux, float uy, float uz)
 {
   float l;
   
@@ -127,7 +127,7 @@ void lookat(GLfloat *m, float ex, float ey, float ez, float tx, float ty, float 
 //   m: 平行移動変換行列を格納する配列
 //   x, y, z: 平行移動量
 //
-void translate(GLfloat *m, float x, float y, float z)
+void translate(GLfloat* m, float x, float y, float z)
 {
   m[12] = x;
   m[13] = y;
@@ -144,7 +144,7 @@ void translate(GLfloat *m, float x, float y, float z)
 //   m: 平行移動変換行列を格納する配列
 //   x, y, z: 拡大縮小率
 //
-void scale(GLfloat *m, float x, float y, float z)
+void scale(GLfloat* m, float x, float y, float z)
 {
   m[ 0] = x;
   m[ 5] = y;
@@ -162,7 +162,7 @@ void scale(GLfloat *m, float x, float y, float z)
 //   x, y, z: 中心軸
 //   a: 回転角（ラジアン）
 //
-void rotate(GLfloat *r, float x, float y, float z, float a)
+void rotate(GLfloat* r, float x, float y, float z, float a)
 {
   float d = sqrt(x * x + y * y + z * z);
   
@@ -200,7 +200,7 @@ void rotate(GLfloat *r, float x, float y, float z, float a)
 //   g: 法線ベクトルの変換行列を格納する配列
 //   m: 元の変換行列
 //
-void normal(GLfloat *g, const GLfloat *m)
+void normal(GLfloat* g, const GLfloat* m)
 {
   g[ 0] = m[ 5] * m[10] - m[ 6] * m[ 9];
   g[ 1] = m[ 6] * m[ 8] - m[ 4] * m[10];
@@ -221,7 +221,7 @@ void normal(GLfloat *g, const GLfloat *m)
 //   m2: m1 の逆行列
 //   逆行列が求められなければ戻り値は false
 //
-bool inverse(GLfloat *m2, const GLfloat *m1)
+bool inverse(GLfloat* m2, const GLfloat* m1)
 {
   int i, j, k;
   GLfloat lu[20], *plu[4], det;
@@ -261,7 +261,7 @@ bool inverse(GLfloat *m2, const GLfloat *m1)
     
     if (i > j)
     {
-      GLfloat *t = plu[j];
+      GLfloat* t = plu[j];
       plu[j] = plu[i];
       plu[i] = t;
       det = -det;
@@ -305,7 +305,7 @@ bool inverse(GLfloat *m2, const GLfloat *m1)
 //
 //   m ← m1 × m2
 //
-void multiply(GLfloat *m, const GLfloat *m1, const GLfloat *m2)
+void multiply(GLfloat* m, const GLfloat* m1, const GLfloat* m2)
 {
   for (int i = 0; i < 16; ++i)
   {
@@ -321,7 +321,7 @@ void multiply(GLfloat *m, const GLfloat *m1, const GLfloat *m2)
 //
 //   v2 ← m * v1
 //
-void transform(GLfloat *v2, const GLfloat *m, const GLfloat *v1)
+void transform(GLfloat* v2, const GLfloat* m, const GLfloat* v1)
 {
   // 配列変数に行列が転置された状態で格納されていることを考慮している
   v2[0] = m[ 0] * v1[0] + m[ 4] * v1[1] + m[ 8] * v1[2] + m[12] * v1[3];
@@ -335,7 +335,7 @@ void transform(GLfloat *v2, const GLfloat *m, const GLfloat *v1)
 //
 //   v2 ← v1 を正規化
 //
-void normalize(GLfloat *v2, const GLfloat *v1)
+void normalize(GLfloat* v2, const GLfloat* v1)
 {
   GLfloat l = v1[0] * v1[0] + v1[1] * v1[1] + v1[2] * v1[2];
 

@@ -4,20 +4,20 @@
 //
 // Catmull-Rom Spline
 //
-//   x0, x1, x2, x3: 制御点
+//   p0, p1, p2, p3: 制御点
 //   t: パラメータ
 //   戻り値: 補間値
 //
-static float catmull_rom(float x0, float x1, float x2, float x3, float t)
+static float catmull_rom(float p0, float p1, float p2, float p3, float t)
 {
-  const float m0((x2 - x0) * 0.5f);
-  const float m1((x3 - x1) * 0.5f);
+  const float m0{ (p2 - p0) * 0.5f };
+  const float m1{ (p3 - p1) * 0.5f };
 
-  const float d(x1 - x2);
-  const float a(2.0f * d + m0 + m1);
-  const float b(-3.0f * d - 2.0f * m0 - m1);
+  const float d{ p1 - p2 };
+  const float a{ 2.0f * d + m0 + m1 };
+  const float b{ -3.0f * d - 2.0f * m0 - m1 };
 
-  return ((a * t + b) * t + m0) * t + x1;
+  return ((a * t + b) * t + m0) * t + p1;
 }
 
 //
@@ -27,7 +27,7 @@ static float catmull_rom(float x0, float x1, float x2, float x3, float t)
 //   p0, p1, p2, p3: 制御点
 //   t: パラメータ
 //
-static void interpolate(float *p, const float *p0, const float *p1, const float *p2, const float *p3, float t)
+static void interpolate(float* p, const float* p0, const float* p1, const float* p2, const float* p3, float t)
 {
   p[0] = catmull_rom(p0[0], p1[0], p2[0], p3[0], t);
   p[1] = catmull_rom(p0[1], p1[1], p2[1], p3[1], t);
@@ -42,11 +42,11 @@ static void interpolate(float *p, const float *p0, const float *p1, const float 
 //   n: 点の数
 //   u: 補間値を得るパラメータ (t[0]≦u≦t[n - 1]）
 //
-void spline(float *q, const float (*p)[3], const float *t, int n, float u)
+void spline(float* q, const float(*p)[3], const float* t, int n, float u)
 {
-  if (--n < 0)
-    return;
-  else if (n == 0)
+  if (--n < 0) return;
+
+  if (n == 0)
   {
     q[0] = p[0][0];
     q[1] = p[0][1];
@@ -79,7 +79,8 @@ void spline(float *q, const float (*p)[3], const float *t, int n, float u)
       // タイムラインを線形（折れ線）補間する場合
       interpolate(q, p[i0], p[i], p[i1], p[i2], (u - t[i]) / (t[i1] - t[i]));
     }
-    else {
+    else
+    {
       q[0] = p[n][0];
       q[1] = p[n][1];
       q[2] = p[n][2];

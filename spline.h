@@ -6,4 +6,4 @@
 //   n: 点の数
 //   u: 補間値を得るパラメータ (t[0]≦u≦t[n - 1]）
 //
-extern void spline(float *q, const float (*p)[3], const float *t, int n, float u);
+extern void spline(float* q, const float(*p)[3], const float* t, int n, float u);
