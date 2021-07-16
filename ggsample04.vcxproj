@@ -162,6 +162,7 @@
     <ClInclude Include="matrix.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ggsample04.frag" />

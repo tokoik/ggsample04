@@ -3,20 +3,22 @@
 //
 #include "GgApp.h"
 
-// シェーダー関連の処理
-#include "shader.h"
+// プロジェクト名
+#ifndef PROJECT_NAME
+#  define PROJECT_NAME "ggsample04"
+#endif
 
 // オブジェクト関連の処理
 #include "object.h"
+
+// シェーダー関連の処理
+#include "shader.h"
 
 // 変換行列関連の処理
 #include "matrix.h"
 
 // Catmull-Rom スプライン
 #include "spline.h"
-
-// 標準ライブラリ
-#include <cmath>
 
 // アニメーションの周期（秒）
 constexpr auto cycle{ 5.0 };
@@ -26,14 +28,14 @@ constexpr auto cycle{ 5.0 };
 //
 int GgApp::main(int argc, const char* const* argv)
 {
-  // ウィンドウを作成する
-  Window window{ "ggsample04" };
+  // ウィンドウを作成する (この行は変更しないでください)
+  Window window{ argc > 1 ? argv[1] : PROJECT_NAME };
 
   // 背景色を指定する
   glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
   // プログラムオブジェクトの作成
-  const auto program{ loadProgram("ggsample04.vert", "pv", "ggsample04.frag", "fc") };
+  const auto program{ loadProgram(PROJECT_NAME ".vert", "pv", PROJECT_NAME ".frag", "fc") };
 
   // uniform 変数のインデックスの検索（見つからなければ -1）
   const auto mcLoc{ glGetUniformLocation(program, "mc") };
@@ -102,7 +104,7 @@ int GgApp::main(int argc, const char* const* argv)
   };
 
   // 通過地点の数
-  static const auto points{ static_cast<int>(std::size(transit)) };
+  constexpr auto points{ static_cast<int>(std::size(transit)) };
 
   // 経過時間のリセット
   glfwSetTime(0.0);
