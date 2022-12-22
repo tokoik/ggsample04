@@ -11,6 +11,7 @@
 		7D57105323F8FB7F00856C4B /* gg.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D57105223F8FB7F00856C4B /* gg.icns */; };
 		7DA3D8E81732ACCA0032A4C1 /* object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DA3D8E41732ACCA0032A4C1 /* object.cpp */; };
 		7DA3D8E91732ACCA0032A4C1 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DA3D8E61732ACCA0032A4C1 /* shader.cpp */; };
+		7DA620E129543CD900849AD5 /* GgApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DA620E029543CD900849AD5 /* GgApp.cpp */; };
 		7DC16DA818F154CF00662E1F /* spline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16DA618F154CF00662E1F /* spline.cpp */; };
 		7DE04504150E1E9700D946BA /* gg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE04502150E1E9700D946BA /* gg.cpp */; };
 		7DE04506150E1EA300D946BA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE04505150E1EA300D946BA /* main.cpp */; };
@@ -24,12 +25,12 @@
 		7D0D9C8C15E0A7360068C360 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = matrix.h; sourceTree = "<group>"; tabWidth = 2; };
 		7D1E90EE1123E36C005E6C75 /* ggsample04.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ggsample04.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D1E90F11123E36C005E6C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7D57104C23F8F98E00856C4B /* Window.h */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Window.h; sourceTree = "<group>"; tabWidth = 2; };
 		7D57105223F8FB7F00856C4B /* gg.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = gg.icns; sourceTree = "<group>"; };
 		7DA3D8E41732ACCA0032A4C1 /* object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = object.cpp; sourceTree = "<group>"; tabWidth = 2; };
 		7DA3D8E51732ACCA0032A4C1 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = object.h; sourceTree = "<group>"; tabWidth = 2; };
 		7DA3D8E61732ACCA0032A4C1 /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = shader.cpp; sourceTree = "<group>"; tabWidth = 2; };
 		7DA3D8E71732ACCA0032A4C1 /* shader.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = shader.h; sourceTree = "<group>"; tabWidth = 2; };
+		7DA620E029543CD900849AD5 /* GgApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GgApp.cpp; sourceTree = "<group>"; };
 		7DC16DA618F154CF00662E1F /* spline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = spline.cpp; sourceTree = "<group>"; tabWidth = 2; };
 		7DC16DA718F154CF00662E1F /* spline.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = spline.h; sourceTree = "<group>"; tabWidth = 2; };
 		7DD627D226CA9CA000C0CA0F /* GgApp.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GgApp.h; sourceTree = "<group>"; tabWidth = 2; };
@@ -66,7 +67,7 @@
 				7DC16DA718F154CF00662E1F /* spline.h */,
 				7DC16DA618F154CF00662E1F /* spline.cpp */,
 				7DD627D226CA9CA000C0CA0F /* GgApp.h */,
-				7D57104C23F8F98E00856C4B /* Window.h */,
+				7DA620E029543CD900849AD5 /* GgApp.cpp */,
 				7DE04503150E1E9700D946BA /* gg.h */,
 				7DE04502150E1E9700D946BA /* gg.cpp */,
 				7DE04508150E1EB200D946BA /* ggsample04.vert */,
@@ -153,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DE04504150E1E9700D946BA /* gg.cpp in Sources */,
+				7DA620E129543CD900849AD5 /* GgApp.cpp in Sources */,
 				7DE04506150E1EA300D946BA /* main.cpp in Sources */,
 				7DE619902025CB6E00466245 /* ggsample04.cpp in Sources */,
 				7DC16DA818F154CF00662E1F /* spline.cpp in Sources */,
